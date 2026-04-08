@@ -1,0 +1,27 @@
+The archaic production chain of hail probability fields generation
+
+IRIS products
+- IRIS generates echo top composites from single radar 45 dBZ and 50 dBZ TOPS products
+  - CORECOMP   : 45 dBZ small composite
+  - CORECOMP_L : 45 dBZ large composite
+  - COREC50    : 50 dBZ small composite
+  - COREC50_L  : 50 dBZ large composite
+
+  These are in cartesian IRIS format, and are converted to PGM images.
+
+
+Model data (same geometry and projection as IRIS composites)
+- Two isotherm height model data fields, ZERO (0C) and M20 (-20C)
+  are fetched from specific directory. These are text format and are converted
+  to PGM images by extract_Tlevels_fromtext binary.
+
+
+Combination
+
+IRIS composites and model fields are inputs to tcsh script TOPSpipe.tcsh,
+which combines those to POH (Probability Of Hail) and LHI (Large Hail Index)
+PGM fields using algorithms coded by C.
+
+Finally the POH and LHI fields are converted to cartesian IRIS data for IRIS use,
+and converted to GIF images with background map by visualize_[POH,LHI]_data.tcsh
+scripts.
